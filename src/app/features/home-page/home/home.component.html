@@ -1,0 +1,37 @@
+<section class="home-container">
+  <mat-card class="home-card">
+    <mat-card-header>
+      <mat-card-title>Welcome to Lumix Search Task</mat-card-title>
+      <mat-card-subtitle
+        >By <a routerLink="/about">Shlomi Masuri</a></mat-card-subtitle
+      >
+    </mat-card-header>
+    <mat-card-content>
+      <hr />
+      <p>Task ojectivs</p>
+      <ul>
+        <li>Choose any public API that you can query by text.</li>
+        <li>
+          Create a typeahead search. keep in mind all search optimization (i.e,
+          debounce, swithMap, etc.).
+        </li>
+        <li>
+          Results should be rendered in virtual scroller - paginate the search
+          while scrolling per batch configurations.
+        </li>
+        <li>
+          Typeahead queries should be saved into a store (use ngrx). optimize it
+          for example, only those that really triggered a search, returned
+          results, etc. Any following typeahead input should popup suggestions
+          from the store (note possible optimizations like, world breakdown,
+          etc.)
+        </li>
+        <li>
+          please make use of: store actions, effects, reducers, selectors.
+          services, interceptors if needed.
+        </li>
+      </ul>
+    </mat-card-content>
+  </mat-card>
+</section>
+<!-- /app-home -->

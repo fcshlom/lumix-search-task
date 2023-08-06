@@ -1,0 +1,23 @@
+<mat-form-field appearance="outline">
+  <input
+    matInput
+    type="text"
+    placeholder="Enter your search query"
+    [formControl]="searchTextControl"
+    [matAutocomplete]="auto"
+    (keyup)="onSearchChange()"
+    (keypress)="onKeyPress($event)"
+  />
+  <mat-autocomplete
+    autoActiveFirstOption
+    #auto="matAutocomplete"
+    (optionSelected)="onOptionSelected($event)"
+  >
+    <mat-option
+      *ngFor="let suggestion of suggestions$ | async"
+      [value]="suggestion"
+    >
+      {{ suggestion }}
+    </mat-option>
+  </mat-autocomplete>
+</mat-form-field>

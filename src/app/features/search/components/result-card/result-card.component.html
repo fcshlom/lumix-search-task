@@ -1,0 +1,20 @@
+<mat-card class="result-card">
+  <mat-card-header>
+    <div mat-card-avatar class="repo-avatar">
+      <img [src]="resultData.owner.avatar_url" />
+    </div>
+    <mat-card-title class="ellipsis">{{ resultData.name }}</mat-card-title>
+    <mat-card-subtitle class="ellipsis">{{
+      resultData.description
+    }}</mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-actions>
+    <div class="repo-info">
+      <p><mat-icon>star</mat-icon>{{ resultData.stargazers_count }}</p>
+      <p><mat-icon>visibility</mat-icon>{{ resultData.watchers }}</p>
+      <p><mat-icon> call_split</mat-icon>{{ resultData.forks }}</p>
+    </div>
+    <a mat-button href="{{ resultData.html_url }}" target="_blank">View Repo</a>
+  </mat-card-actions>
+</mat-card>

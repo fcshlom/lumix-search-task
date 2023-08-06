@@ -1,0 +1,22 @@
+<section class="search-container">
+  <h1>Github Search</h1>
+  <h4>For searching GitHub repository, start type in the search field</h4>
+  <div class="search-bar">
+    <app-search-field
+      [suggestions$]="suggestions$"
+      (onSearch)="onSearchChange($event)"
+    ></app-search-field>
+    <app-paginator
+      *ngIf="(results$ | async)?.totalResults || -1 > 0"
+      [pageSize]="(results$ | async)?.size || 0"
+      [totalItems]="(results$ | async)?.totalResults || 0"
+      (pageChange)="onPageChange($event)"
+    ></app-paginator>
+  </div>
+  <app-loader [isLoading]="isLoading$"></app-loader>
+  <ng-template [ngIf]="!(isLoading$ | async) && queryText !== ''">
+    <app-results-list
+      [resultsItems]="(results$ | async)?.items || []"
+    ></app-results-list>
+  </ng-template>
+</section>

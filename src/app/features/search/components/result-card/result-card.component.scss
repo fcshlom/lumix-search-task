@@ -1,0 +1,41 @@
+.result-card {
+    width: 20vw;
+    margin: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+
+mat-card-actions {
+    display: flex;
+    justify-content: space-between;
+
+    p {
+        display: flex;
+        align-items: flex-end;
+        font-size: 12px;
+    }
+}
+
+.ellipsis {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px;
+}
+
+.repo-avatar {
+    padding-right: 5px;
+
+    img {
+        width: 50px;
+        height: 50px;
+        border-radius: 30%;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    }
+}
+
+.repo-info {
+    display: flex;
+    gap: 5px;
+}

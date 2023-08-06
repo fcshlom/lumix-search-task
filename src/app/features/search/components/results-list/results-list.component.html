@@ -1,0 +1,9 @@
+<div class="cards-container">
+  <app-result-card
+    *ngFor="let result of resultsItems"
+    [resultData]="result"
+  ></app-result-card>
+  <div *ngIf="resultsItems.length === 0">
+    <h3>No results found!!</h3>
+  </div>
+</div>

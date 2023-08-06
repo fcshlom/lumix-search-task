@@ -1,0 +1,19 @@
+:host {
+
+  .home-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 75vh;
+  }
+
+  .home-card {
+    width: 600px;
+    max-width: 90%;
+    padding: 16px;
+    border-radius: 10px;
+    opacity: 0.8;
+    box-shadow: 0 14px 18px rgba(0, 0, 0, 0.5);
+
+  }
+}
