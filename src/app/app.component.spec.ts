@@ -4,6 +4,7 @@ import { AppComponent } from './app.component';
 import { NavBarComponent } from './core/components/nav-bar/nav-bar.component';
 import { MatToolbar } from '@angular/material/toolbar';
 import { async } from 'rxjs';
+import { ElementRef } from '@angular/core';
 
 describe('AppComponent', () => {
   beforeEach(() =>
@@ -36,5 +37,15 @@ describe('AppComponent', () => {
     expect(
       compiled.querySelector('app-nav-bar mat-toolbar h3').textContent
     ).toContain('Lumix Search task');
+  });
+
+  it('should display in nav bar 3 buttons', () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    fixture.detectChanges();
+    const app = fixture.componentInstance;
+    const compiled = fixture.debugElement.nativeElement;
+    expect(
+      compiled.querySelectorAll('app-nav-bar mat-toolbar a').length
+    ).toEqual(3);
   });
 });
