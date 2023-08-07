@@ -1,21 +1,21 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { runSearch, searchEmpty } from '../../stores/actions/search.actions';
-import { addMatchers, initTestScheduler } from 'jasmine-marbles';
-
 import { SearchPageComponent } from './search-page.component';
 import { Store } from '@ngrx/store';
-import {
-  selectSearchResults,
-  selectSearchLoading,
-} from '../../stores/selectors/search.selectors';
 import { PageChanges } from 'src/app/shared/models/page-changes';
-import { Observable, of } from 'rxjs';
+import { of } from 'rxjs';
 import { TestScheduler } from 'rxjs/testing';
 import { SearchFieldComponent } from '../../components/search-field/search-field.component';
 import { LoaderComponent } from 'src/app/shared/components/loader/loader.component';
 import { ResultsListComponent } from '../../components/results-list/results-list.component';
-import { MatFormField } from '@angular/material/form-field';
-import { MatAutocomplete } from '@angular/material/autocomplete';
+import { MatFormField, MatFormFieldModule } from '@angular/material/form-field';
+import {
+  MatAutocomplete,
+  MatAutocompleteModule,
+} from '@angular/material/autocomplete';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('SearchPageComponent', () => {
   let component: SearchPageComponent;
@@ -27,6 +27,14 @@ describe('SearchPageComponent', () => {
     storeMock = jasmine.createSpyObj('Store', ['select', 'dispatch']);
 
     TestBed.configureTestingModule({
+      imports: [
+        FormsModule,
+        ReactiveFormsModule,
+        MatInputModule,
+        BrowserAnimationsModule,
+        MatFormFieldModule,
+        MatAutocompleteModule,
+      ],
       declarations: [
         SearchPageComponent,
         SearchFieldComponent,
@@ -41,21 +49,9 @@ describe('SearchPageComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
     testScheduler = new TestScheduler((actual, expected) => {
-      // Add your custom equality check here if needed.
       expect(actual).toEqual(expected);
     });
   });
-
-  // it('should initialize component correctly', () => {
-  //   // Add your initialization tests here
-  //   expect(component.results$).toBeObservable(
-  //     storeMock.select(selectSearchResults)
-  //   );
-  //   expect(component.isLoading$).toBeObservable(
-  //     storeMock.select(selectSearchLoading)
-  //   );
-  //   // Mock the getAutocomplateQueries selector and test suggestions$ initialization
-  // });
 
   it('should reset page and dispatch searchEmpty action when search query is empty', () => {
     // Test onSearchChange with an empty query
@@ -102,7 +98,6 @@ describe('SearchPageComponent', () => {
     testScheduler.run(({ expectObservable }) => {
       component['runSearch'](query, page, size);
 
-      // Use "expectObservable" instead of "toBeObservable"
       expectObservable(component.suggestions$).toBe('(a|)', {
         a: mockSuggestions,
       });

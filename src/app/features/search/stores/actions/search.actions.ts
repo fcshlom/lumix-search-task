@@ -1,5 +1,4 @@
 import { createAction, props } from '@ngrx/store';
-import { SearchResults } from '../../models/search-results';
 import { SearchActions } from '../../enmus/search-actions';
 import { QueryObj } from '../../models/query-obj';
 
