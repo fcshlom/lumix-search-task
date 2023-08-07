@@ -3,8 +3,6 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 import { NavBarComponent } from './core/components/nav-bar/nav-bar.component';
 import { MatToolbar } from '@angular/material/toolbar';
-import { async } from 'rxjs';
-import { ElementRef } from '@angular/core';
 
 describe('AppComponent', () => {
   beforeEach(() =>
