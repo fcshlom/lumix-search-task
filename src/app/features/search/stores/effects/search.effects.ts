@@ -3,9 +3,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import {
   catchError,
   debounceTime,
-  distinctUntilChanged,
   map,
-  mergeMap,
   switchMap,
   withLatestFrom,
 } from 'rxjs/operators';
@@ -31,13 +29,15 @@ export class SearchEffects {
     private githubService: GithubService
   ) {}
 
+  // Create an effect for handling the runSearch action
   runSearch$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(runSearch),
-      debounceTime(500),
-      withLatestFrom(this.store.select(selectSearchQueries)),
+      ofType(runSearch), // Listen for the runSearch action
+      debounceTime(500), // Debounce the action to prevent frequent API calls
+      withLatestFrom(this.store.select(selectSearchQueries)), // Get the current search queries from the store
       switchMap(([action, queriesFromState]) => {
         if (action.query === '') {
+          // If query is empty, return the searchEmpty action
           return of(searchEmpty);
         }
         if (
@@ -48,6 +48,7 @@ export class SearchEffects {
               q.size === action.size
           )
         ) {
+          // If a matching query is found in state, return searchFoundInStateSuccess action
           const query = queriesFromState.find(
             (q) =>
               q.queryText === action.query &&
@@ -55,7 +56,9 @@ export class SearchEffects {
               q.size === action.size
           )!;
           return of(searchFoundInStateSuccess({ query }));
-        } else
+        }
+        // If query not found in state, make API call using GithubService
+        else
           return this.githubService
             .searchRepositories(action.query, action.page, action.size)
             .pipe(
