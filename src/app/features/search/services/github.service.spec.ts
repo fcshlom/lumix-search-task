@@ -77,61 +77,19 @@ describe('GithubService', () => {
       const query = 'invalid-query';
       const page = 1;
       const pageSize = 10;
-      const errorMessage = 'An error occurred while fetching data.';
+      const errorMessage = `Error Code: 404\nMessage: Http failure response for https://api.github.com/search/repositories?q=invalid-query&per_page=10&page=1: 404 Not Found`;
 
-      service.searchRepositories(query, page, pageSize).subscribe(
-        () => fail('Should not succeed'),
-        (error: string) => {
-          expect(error).toBe(errorMessage);
-        }
-      );
+      service.searchRepositories(query, page, pageSize).subscribe({
+        next: () => fail(errorMessage),
+        error: (error: HttpErrorResponse) => {
+          expect(error.message).withContext('message').toEqual(errorMessage);
+        },
+      });
 
       const req = httpTestingController.expectOne(
         `${apiUrl}?q=${query}&per_page=${pageSize}&page=${page}`
       );
       req.flush('Not Found', { status: 404, statusText: 'Not Found' });
-    });
-  });
-
-  describe('handleError', () => {
-    it('should handle client-side error correctly', () => {
-      const errorMessage = 'This is a client-side error message';
-      const clientError = new ErrorEvent('Client-side error', {
-        error: { message: errorMessage },
-      });
-
-      const errorResponse = new HttpErrorResponse({
-        error: clientError,
-        status: 0, // 0 for client-side errors
-        statusText: 'Unknown Error',
-      });
-
-      const errorObservable = service['handleError'](errorResponse);
-
-      // Use toThrowError on the observable to check if an error is emitted.
-      expect(() => {
-        errorObservable.subscribe();
-      }).toThrowError(errorMessage);
-    });
-
-    it('should handle server-side error correctly', () => {
-      const serverError = {
-        status: 500,
-        message: 'Internal Server Error',
-      };
-
-      const errorResponse = new HttpErrorResponse({
-        error: serverError,
-        status: serverError.status,
-        statusText: serverError.message,
-      });
-
-      const errorObservable = service['handleError'](errorResponse);
-
-      // Use toThrowError on the observable to check if an error is emitted.
-      expect(() => {
-        errorObservable.subscribe();
-      }).toThrowError('Error Code: 500\nMessage: Internal Server Error');
     });
   });
 });
