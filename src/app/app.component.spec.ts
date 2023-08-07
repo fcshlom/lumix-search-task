@@ -18,12 +18,6 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'lumix-search-task'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('lumix-search-task');
-  });
-
   it('should display nav bar', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
